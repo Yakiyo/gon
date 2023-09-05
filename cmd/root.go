@@ -37,12 +37,10 @@ https://github.com/Yakiyo/gom`,
 
 		logger.SetLevel(viper.GetString("log_level"))
 		utils.SetColor(viper.GetString("color"))
-		log.Print(viper.AllSettings())
 		log.Debug(viper.AllSettings())
 		where.SetRoot(viper.GetString("root_dir"))
 		return nil
 	},
-	Run: func(cmd *cobra.Command, args []string) {},
 }
 
 func Execute() {
