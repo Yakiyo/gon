@@ -37,9 +37,3 @@ func SetRoot(path string) {
 func RootDir() string {
 	return root
 }
-
-// default config file path - ~/{{appname}}/{{appname}}.toml
-// toml is more human friendly so its a good config file syntax
-func Config() string {
-	return filepath.Join(root, meta.AppName+".toml")
-}

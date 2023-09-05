@@ -2,11 +2,13 @@ package cmd
 
 import (
 	"os"
+	"strings"
 
 	"github.com/Yakiyo/gom/utils"
 	"github.com/Yakiyo/gom/utils/config"
 	logger "github.com/Yakiyo/gom/utils/log"
 	"github.com/Yakiyo/gom/utils/meta"
+	"github.com/Yakiyo/gom/utils/where"
 	"github.com/charmbracelet/log"
 	cc "github.com/ivanpirog/coloredcobra"
 	"github.com/spf13/cobra"
@@ -14,29 +16,33 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:     meta.AppName,
-	Short:   "Shorter description",
-	Long:    `Longer description`,
+	Use:   meta.AppName,
+	Short: "Go Version Manager",
+	Long: `Gom is an easy to use version manager for Go, designed with simplicity and speed in mind.
+Gom itself is written in Go.
+Gom is open-source. For queries, issues or bug reports, visit:
+https://github.com/Yakiyo/gom`,
 	Version: meta.Version,
 	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
+		viper.SetEnvPrefix("GOM")
+		viper.SetEnvKeyReplacer(strings.NewReplacer("-", "_"))
+		viper.AutomaticEnv()
 		config.BindFlags(cmd)
-
-		if cfg := utils.Must(cmd.Flags().GetString("config")); cfg != "" {
-			// when passed the `--config/-c` flag, set viper
-			// to explicitly read from that file, this will
-			// error if the config file does not exist
-			viper.SetConfigFile(cfg)
+		if err := viper.ReadInConfig(); err != nil {
+			// It's okay if there isn't a config file
+			if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
+				return err
+			}
 		}
-
-		// read config
-		config.Read()
 
 		logger.SetLevel(viper.GetString("log_level"))
 		utils.SetColor(viper.GetString("color"))
-
+		log.Print(viper.AllSettings())
 		log.Debug(viper.AllSettings())
+		where.SetRoot(viper.GetString("root_dir"))
 		return nil
 	},
+	Run: func(cmd *cobra.Command, args []string) {},
 }
 
 func Execute() {
@@ -59,9 +65,10 @@ func init() {
 	})
 
 	f := rootCmd.PersistentFlags()
-	// allow users to set custom config files
-	f.StringP("config", "c", "", "Path to config file")
-	// dont mention debug level, usually users dont need, only on the dev side
+	// dont mention debug level, usually users dont need, only used on the dev side
 	f.String("log-level", "", "Set log level [info, warn, error, fatal]")
 	f.String("color", "", "Set color output [always, auto, never]")
+	f.String("bin", "", "Set bin directory. Defaults to ~/gom/go")
+	f.String("root-dir", "", "Root directory for gom to use. Defaults to ~/gom")
+	f.String("arch", "", "Override architecture to use")
 }

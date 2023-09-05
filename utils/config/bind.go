@@ -14,4 +14,7 @@ func BindFlags(cmd *cobra.Command) {
 	// bind command line flags to viper keys
 	bind("log_level", "log-level")
 	bind("color", "color")
+	bind("arch", "arch")
+	bind("bin", "bin")
+	bind("root_dir", "root-dir")
 }
