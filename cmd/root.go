@@ -18,8 +18,8 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   meta.AppName,
 	Short: "Go Version Manager",
-	Long: `Gom is an easy to use version manager for Go, designed with simplicity and speed in mind.
-Gom itself is written in Go.
+	Long: `Gom is an easy to use version manager for Go, written in Go, designed with simplicity and speed in mind.
+
 Gom is open-source. For queries, issues or bug reports, visit:
 https://github.com/Yakiyo/gom`,
 	Version: meta.Version,
@@ -46,6 +46,7 @@ https://github.com/Yakiyo/gom`,
 func Execute() {
 	err := rootCmd.Execute()
 	if err != nil {
+		log.Error(err)
 		os.Exit(1)
 	}
 }
