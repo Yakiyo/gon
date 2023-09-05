@@ -6,16 +6,17 @@ import (
 
 	"github.com/Yakiyo/gom/utils/meta"
 	"github.com/charmbracelet/log"
+	"github.com/spf13/viper"
 
 	homedir "github.com/mitchellh/go-homedir"
 )
 
-// app root dir, this is private and is to be used interally within the package only
-// default: $HOME/{{appName}} - i.e. if app is kubernetes, it would be ~/kubernetes
+var join = filepath.Join
+
 var root string
 
 func init() {
-	root = filepath.Join(Home(), meta.AppName)
+	root = join(Home(), meta.AppName)
 }
 
 // find user home dir. In our case, we panic when we can't get it
@@ -25,6 +26,24 @@ func Home() string {
 		log.Fatal("Unable to locate user home dir, consider manually setting the value of $HOME/$USERPROFILE env var")
 	}
 	return path
+}
+
+// get the `bin` directory, this is where the current active version is stored
+func Bin() string {
+	if conf := viper.GetString("bin"); conf != "" {
+		return conf
+	}
+	return join(root, "go")
+}
+
+// get installations directory
+func Installations() string {
+	return join(root, "installations")
+}
+
+// get the `alias.json` file where info about aliases is stored
+func Aliases() string {
+	return join(root, "alias.json")
 }
 
 // set root dir
