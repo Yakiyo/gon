@@ -2,8 +2,11 @@ package meta
 
 const (
 	// name of app
-	AppName = "app"
+	AppName = "gom"
 
 	// app version
-	Version = "0.1.0"
+	Version = "dev"
+
+	// Built at
+	BuiltAt = "now"
 )
