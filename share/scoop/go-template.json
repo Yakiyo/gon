@@ -1,0 +1,29 @@
+{
+    "version": "0.1.1",
+    "architecture": {
+        "32bit": {
+            "url": "https://github.com/Yakiyo/go-template/releases/download/v0.1.1/go-template_Windows_i386.zip",
+            "bin": [
+                "go-template.exe"
+            ],
+            "hash": "027da71d6330d005560750b625761d06055cda153ae032621626520009bc385e"
+        },
+        "64bit": {
+            "url": "https://github.com/Yakiyo/go-template/releases/download/v0.1.1/go-template_Windows_x86_64.zip",
+            "bin": [
+                "go-template.exe"
+            ],
+            "hash": "a2328ae4534c3ab8aa7048cf4ad4113731c38f08b44b5b43d82a01dee47f8a36"
+        },
+        "arm64": {
+            "url": "https://github.com/Yakiyo/go-template/releases/download/v0.1.1/go-template_Windows_arm64.zip",
+            "bin": [
+                "go-template.exe"
+            ],
+            "hash": "764e54bc9bc728deb87f54eb1bd7290a34f67cc271c8c82fe09a671e06c06f2d"
+        }
+    },
+    "homepage": "https://github.com/Yakiyo/go-template",
+    "license": "MIT",
+    "description": "go-template version v0.1.1"
+}
