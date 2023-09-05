@@ -22,14 +22,14 @@ This is handy to automatically add the path to your shell's env`,
 
 func init() {
 	f := pathCmd.Flags()
-	f.Bool("bin", false, "Show the bin directory, within which is the go executable")
+	f.Bool("bin-dir", false, "Show the bin directory, within which is the go executable")
 	f.Bool("current", false, "Show the current directory, within which the currently used version is stored")
 	f.Bool("root", false, "Show gom root dir, the directory used by gom")
 	rootCmd.AddCommand(pathCmd)
 
 	// need to define it separately, else it creates a cycle with pathCmd
 	pathCmd.RunE = func(cmd *cobra.Command, args []string) error {
-		if used("bin") {
+		if used("bin-dir") {
 			fmt.Println(filepath.Join(where.Bin(), "bin"))
 		} else if used("current") {
 			fmt.Println(where.Bin())
