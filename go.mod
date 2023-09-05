@@ -1,4 +1,4 @@
-module github.com/Yakiyo/go-template
+module github.com/Yakiyo/gom
 
 go 1.20
 

@@ -3,10 +3,10 @@ package cmd
 import (
 	"os"
 
-	"github.com/Yakiyo/go-template/utils"
-	"github.com/Yakiyo/go-template/utils/config"
-	logger "github.com/Yakiyo/go-template/utils/log"
-	"github.com/Yakiyo/go-template/utils/meta"
+	"github.com/Yakiyo/gom/utils"
+	"github.com/Yakiyo/gom/utils/config"
+	logger "github.com/Yakiyo/gom/utils/log"
+	"github.com/Yakiyo/gom/utils/meta"
 	"github.com/charmbracelet/log"
 	cc "github.com/ivanpirog/coloredcobra"
 	"github.com/spf13/cobra"
