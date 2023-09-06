@@ -8,6 +8,7 @@ import (
 	"regexp"
 
 	"github.com/Yakiyo/gom/utils/where"
+	"github.com/charmbracelet/log"
 	json "github.com/json-iterator/go"
 	"github.com/samber/lo"
 )
@@ -21,6 +22,7 @@ var spanRegex = regexp.MustCompile(`\<span\>go(?P<version>([0-9]+|\.)+)\</span\>
 // it generates the file and then uses it
 func List() ([]string, error) {
 	if needToUpdate() {
+		log.Info("Updating local versions cache")
 		err := createFile()
 		if err != nil {
 			return []string{}, err
