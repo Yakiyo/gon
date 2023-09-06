@@ -18,5 +18,5 @@ func VersionArchiveUrl(version string, arch string) string {
 	if os == "linux" && arch == "arm" {
 		arch = "armv61"
 	}
-	return "https://dl.google.com/go/" + version + "." + os + "-" + arch + ext
+	return "https://go.dev/dl/go" + version + "." + os + "-" + arch + ext
 }
