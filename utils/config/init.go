@@ -2,6 +2,7 @@ package config
 
 import (
 	"path/filepath"
+	"runtime"
 
 	"github.com/Yakiyo/gom/utils/where"
 	v "github.com/spf13/viper"
@@ -13,4 +14,5 @@ func init() {
 	v.SetDefault("color", "auto")
 	v.SetDefault("root_dir", where.RootDir())
 	v.SetDefault("bin", filepath.Join(where.RootDir(), "go"))
+	v.SetDefault("arch", runtime.GOARCH)
 }
