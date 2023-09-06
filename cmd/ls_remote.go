@@ -13,7 +13,7 @@ var lsRemoteCmd = &cobra.Command{
 	Short:         "List all available Go versions",
 	Long:          `View all available versions of Go. Available versions are taken from https://go.dev/dl/`,
 	Args:          cobra.NoArgs,
-	Aliases: []string{"list-remote"},
+	Aliases:       []string{"list-remote"},
 	SilenceUsage:  true,
 	SilenceErrors: true,
 	RunE: func(cmd *cobra.Command, args []string) error {
