@@ -1,6 +1,6 @@
 package meta
 
-const (
+var (
 	// name of app
 	AppName = "gom"
 
