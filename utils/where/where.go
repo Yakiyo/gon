@@ -56,3 +56,8 @@ func SetRoot(path string) {
 func RootDir() string {
 	return root
 }
+
+// cache dir
+func Cache() string {
+	return join(root, "cache")
+}
