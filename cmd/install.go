@@ -5,9 +5,13 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"path/filepath"
+	"runtime"
 	"strings"
 
+	"github.com/Yakiyo/gom/archives"
 	"github.com/Yakiyo/gom/utils"
+	"github.com/Yakiyo/gom/utils/where"
 	"github.com/Yakiyo/gom/versions"
 	"github.com/charmbracelet/log"
 	"github.com/samber/lo"
@@ -69,19 +73,39 @@ Otherwise it expects a valid semver compliant string as argument
 			}
 			log.Info("Resolving version from go.mod", "version", version)
 		}
+		intls := where.Installations()
+		versionDir := filepath.Join(intls, version)
+		if utils.PathExists(versionDir) {
+			return fmt.Errorf("Version %s is already installed. Uninstall it first and then install it again if needed", version)
+		}
+		err := utils.EnsureDir(intls)
+		if err != nil {
+			return fmt.Errorf("Unable to create installations dir due to error %v", err)
+		}
 		url := versions.VersionArchiveUrl(version, viper.GetString("arch"))
 
-		log.Info("Downloading archive to temp directory", "url", url)
-		file, err := os.CreateTemp("", "archive")
+		file, err := os.Create("/workspace/gom/archive.tar.gz")
+
 		if err != nil {
 			return err
 		}
+		log.Info("Downloading archive to temp directory", "url", url, "tmp", file.Name())
 		defer os.Remove(file.Name())
 		err = downloadToFile(url, file)
 		if err != nil {
 			return err
 		}
-
+		if runtime.GOOS == "windows" {
+			log.Info("Extracting zip file")
+			err = archives.Unzip(file, versionDir)
+		} else {
+			log.Info("Extracting tar file")
+			err = archives.Untar(file, versionDir)
+		}
+		if err != nil {
+			return fmt.Errorf("Failed to extract files from archive due to error %s", err)
+		}
+		fmt.Printf("Successfully installed Go version %v\n", version)
 		return nil
 	},
 }
@@ -91,6 +115,9 @@ func downloadToFile(url string, file *os.File) error {
 	resp, err := http.Get(url)
 	if err != nil {
 		return err
+	}
+	if resp.StatusCode != 200 {
+		return fmt.Errorf("Failed to download archive, received status code %v %v", resp.StatusCode, resp.Status)
 	}
 	defer resp.Body.Close()
 	_, err = io.Copy(file, resp.Body)

@@ -2,37 +2,51 @@ package archives
 
 import (
 	"archive/tar"
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
+
+	"github.com/Yakiyo/gom/utils"
+	"github.com/charmbracelet/log"
 )
 
 // extract files from tar `file` to directory `dest`
 func Untar(file *os.File, dest string) error {
+	// gzr, err := gzip.NewReader(file)
+	// if err != nil {
+	// 	fmt.Println("here")
+	// 	return err
+	// }
+	// defer gzr.Close()
 	tr := tar.NewReader(file)
 	var target string
+	var name string
 	for {
+		fmt.Println("in iter")
 		header, err := tr.Next()
 
 		// no more files
 		if err == io.EOF {
-			break
-		} else if err != nil {
+			return nil
+		}
+		if err != nil {
+			fmt.Println("\n\n\n", err == io.EOF, err.Error())
 			return err
-		} else if header == nil {
+		}
+		if header == nil {
 			continue
 		}
-
-		target = filepath.Join(dest, header.Name)
+		name = header.Name
+		target = filepath.Join(dest, name)
 
 		switch header.Typeflag {
 
 		// if its a dir and it doesn't exist create it
 		case tar.TypeDir:
-			if _, err := os.Stat(target); err != nil {
-				if err := os.MkdirAll(target, 0755); err != nil {
-					return err
-				}
+			err = utils.EnsureDir(target)
+			if err != nil {
+				return err
 			}
 
 		// if it's a file create it
@@ -51,6 +65,6 @@ func Untar(file *os.File, dest string) error {
 			// to wait until all operations have completed.
 			f.Close()
 		}
+		log.Debug("extracting file", "file", name)
 	}
-	return nil
 }

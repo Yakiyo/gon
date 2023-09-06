@@ -31,6 +31,7 @@ func extract(f *zip.File, dest string) error {
 	}
 	defer rc.Close()
 	path := filepath.Join(dest, f.Name)
+	log.Debug("Extracting file", "file", f.Name)
 
 	// if its a dir, make the directory and exit early
 	if f.FileInfo().IsDir() {
