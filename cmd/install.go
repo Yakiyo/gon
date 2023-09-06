@@ -26,14 +26,14 @@ var installCmd = &cobra.Command{
 	Long: `Install a version of the Go compiler
 	
 If no argument is provided, it tries to find and use the version from a go.mod file in the current directory.
-"latest" or "lts" can also be given as argument to install the latest available stable version.
+"latest" can also be given as argument to install the latest available stable version.
 Otherwise it expects a valid semver compliant string as argument
 `,
 	SilenceUsage:  true,
 	SilenceErrors: true,
-	Example: "gom install lts    # install latest version\n" +
-		"gom install 1.20.1 # install specific version\n" +
-		"gom install        # use a go.mod file in current directory",
+	Example: "gom install latest 	# install latest version\n" +
+		"gom install 1.20.1 	# install specific version\n" +
+		"gom install        	# use a go.mod file in current directory",
 	Args: cobra.MaximumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var version string
@@ -43,7 +43,7 @@ Otherwise it expects a valid semver compliant string as argument
 			if err != nil {
 				return err
 			}
-			if version == "latest" || version == "lts" {
+			if version == "latest" {
 				version = vers[0]
 				log.Info("Resolving latest version", "version", version)
 			}
