@@ -7,6 +7,7 @@ import (
 
 	"github.com/Yakiyo/gom/utils"
 	"github.com/Yakiyo/gom/versions"
+	"github.com/charmbracelet/log"
 	"github.com/samber/lo"
 	"github.com/spf13/cobra"
 )
@@ -37,6 +38,7 @@ Otherwise it expects a valid semver compliant string as argument
 			}
 			if version == "latest" || version == "lts" {
 				version = vers[0]
+				log.Info("Resolving latest version", "version", version)
 			}
 			version = strings.TrimSuffix(strings.ToLower(version), "v")
 			if !lo.Contains(vers, version) {
@@ -62,6 +64,7 @@ Otherwise it expects a valid semver compliant string as argument
 			if version == "" {
 				return fmt.Errorf("Could not parse version from go.mod file. Line contains %s", vline)
 			}
+			log.Info("Resolving version from go.mod", "version", version)
 		}
 
 		fmt.Println(version)
