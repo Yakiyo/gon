@@ -2,6 +2,8 @@ package cmd
 
 import (
 	"fmt"
+	"io"
+	"net/http"
 	"os"
 	"strings"
 
@@ -10,6 +12,7 @@ import (
 	"github.com/charmbracelet/log"
 	"github.com/samber/lo"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // installCmd represents the install command
@@ -66,10 +69,32 @@ Otherwise it expects a valid semver compliant string as argument
 			}
 			log.Info("Resolving version from go.mod", "version", version)
 		}
+		url := versions.VersionArchiveUrl(version, viper.GetString("arch"))
 
-		fmt.Println(version)
+		log.Info("Downloading archive to temp directory", "url", url)
+		file, err := os.CreateTemp("", "archive")
+		if err != nil {
+			return err
+		}
+		defer os.Remove(file.Name())
+		err = downloadToFile(url, file)
+		if err != nil {
+			return err
+		}
+
 		return nil
 	},
+}
+
+// download archive from `url` to file `file`
+func downloadToFile(url string, file *os.File) error {
+	resp, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	_, err = io.Copy(file, resp.Body)
+	return err
 }
 
 func init() {
