@@ -1,18 +1,41 @@
-package govers
+package versions
 
 import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"regexp"
 
+	"github.com/Yakiyo/gom/utils/where"
+	json "github.com/json-iterator/go"
 	"github.com/samber/lo"
 )
 
 // a simple regex to do some hacky weird-ass scraping
 var spanRegex = regexp.MustCompile(`\<span\>go(?P<version>([0-9]+|\.)+)\</span\>`)
 
-func List() (versions []string, err error) {
+// list all versions
+//
+// this uses the local versions cache file, if its stale or does not exist,
+// it generates the file and then uses it
+func List() ([]string, error) {
+	if needToUpdate() {
+		err := createFile()
+		if err != nil {
+			return []string{}, err
+		}
+	}
+	b, err := os.ReadFile(where.VersionCache())
+	if err != nil {
+		return []string{}, err
+	}
+	versions := []string{}
+	err = json.Unmarshal(b, &versions)
+	return versions, err
+}
+
+func fetchVersions() (versions []string, err error) {
 	versions = []string{}
 	r, err := http.Get("https://go.dev/dl/")
 	if err != nil {
