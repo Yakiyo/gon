@@ -57,7 +57,7 @@ func RootDir() string {
 	return root
 }
 
-// cache dir
-func Cache() string {
-	return join(root, "cache")
+// version cache file
+func VersionCache() string {
+	return join(root, "versions.json")
 }
