@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/Yakiyo/gon/utils"
 	"github.com/Yakiyo/gon/utils/where"
 	"github.com/samber/lo"
 	"github.com/spf13/cobra"
@@ -21,7 +22,12 @@ var lsCmd = &cobra.Command{
 	SilenceErrors: true,
 	Args:          cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		dirs, err := os.ReadDir(where.Installations())
+		intls := where.Installations()
+		if !utils.PathExists(intls) {
+			fmt.Println("No versions installed")
+			return nil
+		}
+		dirs, err := os.ReadDir(intls)
 		if err != nil {
 			return fmt.Errorf("Unable to read dir entries for installations due to error %v", err)
 		}
