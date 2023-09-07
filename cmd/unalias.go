@@ -3,36 +3,36 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/Yakiyo/gon/aliases"
 	"github.com/spf13/cobra"
 )
 
 // unaliasCmd represents the unalias command
 var unaliasCmd = &cobra.Command{
-	Use:   "unalias",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Use:           "unalias",
+	Short:         "Remove an alias",
 	SilenceUsage:  true,
 	SilenceErrors: true,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("unalias called")
+	Args:          cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		am, err := aliases.AliasMap()
+		if err != nil {
+			return err
+		}
+		key := args[0]
+		if _, ok := am[key]; !ok {
+			return fmt.Errorf("No alias with name %v exists", key)
+		}
+		delete(am, key)
+		err = aliases.SaveAliases(am)
+		if err != nil {
+			return anyhow("Error when saving new alias map", err)
+		}
+		fmt.Println("Successfully removed alias")
+		return nil
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(unaliasCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// unaliasCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// unaliasCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
