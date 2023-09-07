@@ -67,7 +67,7 @@ Otherwise it expects a valid semver compliant string as argument
 			if !ok {
 				return fmt.Errorf("Invalid go.mod file, file does not specify go version")
 			}
-			version = strings.TrimSpace(strings.TrimPrefix(vline, "go "))
+			version = versions.SafeVStr(version)
 			if version == "" {
 				return fmt.Errorf("Could not parse version from go.mod file. Line contains %s", vline)
 			}
