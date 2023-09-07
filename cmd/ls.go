@@ -7,8 +7,10 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/Yakiyo/gon/aliases"
 	"github.com/Yakiyo/gon/utils"
 	"github.com/Yakiyo/gon/utils/where"
+	"github.com/fatih/color"
 	"github.com/samber/lo"
 	"github.com/spf13/cobra"
 )
@@ -41,13 +43,47 @@ var lsCmd = &cobra.Command{
 			fmt.Println("No versions installed")
 			return nil
 		}
+		am, err := aliases.AliasMap()
+		// if theres any error when getting alias map, just set it to an empty
+		// map and continue
+		if err != nil {
+			am = map[string]string{}
+		}
+		current, _ := getCurrent()
+		fm := flipMap(am)
+		var s string
 		lo.ForEach[string](lo.Reverse(vers), func(i string, _ int) {
-			fmt.Println(i)
+			als, ok := fm[i]
+			if ok {
+				s = "• " + i + " " + conceal(strings.Join(als, " "))
+			} else {
+				s = "• " + i
+			}
+			if i == current {
+				s = color.CyanString(s)
+			}
+			fmt.Println(s)
 		})
 		return nil
 	},
 }
 
+var conceal = color.New(color.Faint).Sprint
+
 func init() {
 	rootCmd.AddCommand(lsCmd)
+}
+
+func flipMap(m map[string]string) map[string][]string {
+	res := map[string][]string{}
+	for k, v := range m {
+		old, ok := res[v]
+		if ok {
+			old = append(old, k)
+		} else {
+			old = []string{k}
+		}
+		res[v] = old
+	}
+	return res
 }
