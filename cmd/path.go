@@ -11,7 +11,7 @@ import (
 
 // pathCmd represents the path command
 var pathCmd = &cobra.Command{
-	Use:   "path",
+	Use:   "path --bin-dir|--current|--root",
 	Short: "Show root path used by gom",
 	Long: `Show root path used by gom.
 	

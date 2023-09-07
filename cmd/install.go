@@ -21,7 +21,7 @@ import (
 
 // installCmd represents the install command
 var installCmd = &cobra.Command{
-	Use:   "install",
+	Use:   "install version",
 	Short: "Install a version of the Go compiler",
 	Long: `Install a version of the Go compiler
 	
