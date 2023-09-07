@@ -71,3 +71,5 @@ func init() {
 	f.String("root-dir", "", "Root directory for gom to use. Defaults to ~/gom")
 	f.String("arch", "", "Override architecture to use")
 }
+
+var anyhow = utils.Anyhow
