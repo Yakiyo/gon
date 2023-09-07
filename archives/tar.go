@@ -18,6 +18,7 @@ func Untar(src, dest string) error {
 	if err != nil {
 		return fmt.Errorf("Unable to open tar file %v", err)
 	}
+	defer file.Close()
 	gzr, err := gzip.NewReader(file)
 	if err != nil {
 		return fmt.Errorf("gzip reader failure %v", err)

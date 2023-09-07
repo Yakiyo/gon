@@ -97,13 +97,17 @@ Otherwise it expects a valid semver compliant string as argument
 		}
 		if runtime.GOOS == "windows" {
 			log.Info("Extracting zip file")
-			err = archives.Unzip(file, versionDir)
+			err = archives.Unzip(file, intls)
 		} else {
 			log.Info("Extracting tar file")
-			err = archives.Untar(file.Name(), versionDir)
+			err = archives.Untar(file.Name(), intls)
 		}
 		if err != nil {
 			return fmt.Errorf("Failed to extract files from archive due to error %s", err)
+		}
+		err = os.Rename(filepath.Join(intls, "go"), versionDir)
+		if err != nil {
+			return fmt.Errorf("Failed to rename extracted folder due to error %v", err)
 		}
 		fmt.Printf("Successfully installed Go version %v\n", version)
 		return nil
