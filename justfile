@@ -1,6 +1,7 @@
 set positional-arguments
 
 alias b := build
+alias gb := grbuild
 alias u := update
 alias r := run
 
@@ -22,3 +23,7 @@ fmt:
 update:
 	go get
 	go mod tidy
+
+# build with goreleaser for current arch
+grbuild:
+	goreleaser build --single-target --clean --snapshot -o gon
