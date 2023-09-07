@@ -2,37 +2,46 @@ package cmd
 
 import (
 	"fmt"
+	"io/fs"
+	"os"
+	"path/filepath"
+	"strings"
 
+	"github.com/Yakiyo/gom/utils/where"
+	"github.com/samber/lo"
 	"github.com/spf13/cobra"
 )
 
 // lsCmd represents the ls command
 var lsCmd = &cobra.Command{
-	Use:   "ls",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Use:           "ls",
+	Short:         "List locally installed versions",
+	Aliases:       []string{"list"},
 	SilenceUsage:  true,
 	SilenceErrors: true,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("ls called")
+	Args:          cobra.NoArgs,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		dirs, err := os.ReadDir(where.Installations())
+		if err != nil {
+			return fmt.Errorf("Unable to read dir entries for installations due to error %v", err)
+		}
+		vers := lo.FilterMap[fs.DirEntry, string](dirs, func(f fs.DirEntry, _ int) (string, bool) {
+			if !f.IsDir() || strings.HasPrefix(f.Name(), ".") {
+				return "", false
+			}
+			return filepath.Base(f.Name()), true
+		})
+		if len(vers) < 1 {
+			fmt.Println("No versions installed")
+			return nil
+		}
+		lo.ForEach[string](lo.Reverse(vers), func(i string, _ int) {
+			fmt.Println(i)
+		})
+		return nil
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(lsCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// lsCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// lsCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
