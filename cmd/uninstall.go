@@ -16,10 +16,10 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	SilenceUsage:  true,
 	SilenceErrors: true,
-	Args: cobra.ExactArgs(1),
+	Args:          cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) (err error) {
 		_ = args[0]
-		
+
 		return
 	},
 }
