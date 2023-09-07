@@ -1,0 +1,29 @@
+{
+    "version": "0.0.1",
+    "architecture": {
+        "32bit": {
+            "url": "https://github.com/Yakiyo/gom/releases/download/v0.0.1/gom_Windows_i386.zip",
+            "bin": [
+                "gom.exe"
+            ],
+            "hash": "9b9b6df3cd51a5811e5fa6707fa7c5c504f8d8474e3821e90a089d5783dc8f54"
+        },
+        "64bit": {
+            "url": "https://github.com/Yakiyo/gom/releases/download/v0.0.1/gom_Windows_x86_64.zip",
+            "bin": [
+                "gom.exe"
+            ],
+            "hash": "6600c846fdc2f6195f977db55efd56740ac36eb38326479ff88d3a71731a9eb3"
+        },
+        "arm64": {
+            "url": "https://github.com/Yakiyo/gom/releases/download/v0.0.1/gom_Windows_arm64.zip",
+            "bin": [
+                "gom.exe"
+            ],
+            "hash": "036535520a49b5aa7c60aae70269f8ac596c189a9afd00a218855547bab0f5c3"
+        }
+    },
+    "homepage": "https://github.com/Yakiyo/gom",
+    "license": "MIT",
+    "description": "gom version v0.0.1"
+}
