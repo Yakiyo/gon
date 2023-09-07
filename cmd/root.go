@@ -1,7 +1,9 @@
 package cmd
 
 import (
+	"fmt"
 	"os"
+	"runtime"
 	"strings"
 
 	"github.com/Yakiyo/gon/utils"
@@ -51,6 +53,14 @@ func Execute() {
 }
 
 func init() {
+	rootCmd.SetVersionTemplate(
+		fmt.Sprintf("{{ .Name }} version {{ .Version }} %v/%v (built at %v)\n",
+			runtime.GOOS,
+			runtime.GOARCH,
+			meta.BuiltAt,
+		),
+	)
+
 	cc.Init(&cc.Config{
 		RootCmd:         rootCmd,
 		Headings:        cc.HiCyan + cc.Bold + cc.Underline,
