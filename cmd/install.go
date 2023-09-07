@@ -9,10 +9,10 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/Yakiyo/gom/archives"
-	"github.com/Yakiyo/gom/utils"
-	"github.com/Yakiyo/gom/utils/where"
-	"github.com/Yakiyo/gom/versions"
+	"github.com/Yakiyo/gon/archives"
+	"github.com/Yakiyo/gon/utils"
+	"github.com/Yakiyo/gon/utils/where"
+	"github.com/Yakiyo/gon/versions"
 	"github.com/charmbracelet/log"
 	"github.com/samber/lo"
 	"github.com/spf13/cobra"
@@ -31,9 +31,9 @@ Otherwise it expects a valid semver compliant string as argument
 `,
 	SilenceUsage:  true,
 	SilenceErrors: true,
-	Example: "gom install latest 	# install latest version\n" +
-		"gom install 1.20.1 	# install specific version\n" +
-		"gom install        	# use a go.mod file in current directory",
+	Example: "gon install latest 	# install latest version\n" +
+		"gon install 1.20.1 	# install specific version\n" +
+		"gon install        	# use a go.mod file in current directory",
 	Args: cobra.MaximumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var version string

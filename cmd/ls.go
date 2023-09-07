@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/Yakiyo/gom/utils/where"
+	"github.com/Yakiyo/gon/utils/where"
 	"github.com/samber/lo"
 	"github.com/spf13/cobra"
 )

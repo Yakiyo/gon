@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/Yakiyo/gom/versions"
+	"github.com/Yakiyo/gon/versions"
 	"github.com/spf13/cobra"
 )
 

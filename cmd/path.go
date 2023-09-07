@@ -4,16 +4,16 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/Yakiyo/gom/utils"
-	"github.com/Yakiyo/gom/utils/where"
+	"github.com/Yakiyo/gon/utils"
+	"github.com/Yakiyo/gon/utils/where"
 	"github.com/spf13/cobra"
 )
 
 // pathCmd represents the path command
 var pathCmd = &cobra.Command{
 	Use:   "path --bin-dir|--current|--root",
-	Short: "Show root path used by gom",
-	Long: `Show root path used by gom.
+	Short: "Show root path used by gon",
+	Long: `Show root path used by gon.
 	
 This is handy to automatically add the path to your shell's env`,
 	SilenceErrors: true,
@@ -24,7 +24,7 @@ func init() {
 	f := pathCmd.Flags()
 	f.Bool("bin-dir", false, "Show the bin directory, within which is the go executable")
 	f.Bool("current", false, "Show the current directory, within which the currently used version is stored")
-	f.Bool("root", false, "Show gom root dir, the directory used by gom")
+	f.Bool("root", false, "Show gon root dir, the directory used by gon")
 	rootCmd.AddCommand(pathCmd)
 
 	// need to define it separately, else it creates a cycle with pathCmd

@@ -7,7 +7,7 @@ import (
 	"os"
 	"regexp"
 
-	"github.com/Yakiyo/gom/utils/where"
+	"github.com/Yakiyo/gon/utils/where"
 	"github.com/charmbracelet/log"
 	json "github.com/json-iterator/go"
 	"github.com/samber/lo"

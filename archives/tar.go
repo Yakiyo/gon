@@ -8,7 +8,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/Yakiyo/gom/utils"
+	"github.com/Yakiyo/gon/utils"
 	"github.com/charmbracelet/log"
 )
 

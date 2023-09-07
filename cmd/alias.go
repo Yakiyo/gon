@@ -6,9 +6,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/Yakiyo/gom/utils"
-	"github.com/Yakiyo/gom/utils/where"
-	"github.com/Yakiyo/gom/versions"
+	"github.com/Yakiyo/gon/utils"
+	"github.com/Yakiyo/gon/utils/where"
+	"github.com/Yakiyo/gon/versions"
 	"github.com/charmbracelet/log"
 	json "github.com/json-iterator/go"
 	"github.com/spf13/cobra"
@@ -22,8 +22,8 @@ var aliasCmd = &cobra.Command{
 	SilenceUsage:  true,
 	SilenceErrors: true,
 	Args:          cobra.ExactArgs(2),
-	Example: "gom alias v1.21.0 default\n" +
-		"gom alias v1.17.9 legacy",
+	Example: "gon alias v1.21.0 default\n" +
+		"gon alias v1.17.9 legacy",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		version, alias := args[0], args[1]
 		if strings.ToLower(alias) == "latest" {

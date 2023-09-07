@@ -4,7 +4,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/Yakiyo/gom/utils/where"
+	"github.com/Yakiyo/gon/utils/where"
 	v "github.com/spf13/viper"
 )
 

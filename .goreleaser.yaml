@@ -8,7 +8,7 @@ builds:
   - env:
       - CGO_ENABLED=0
     ldflags:
-      - -s -w -X github.com/Yakiyo/gom/utils/meta.Version={{ .Version }} -X github.com/Yakiyo/gom/utils/meta.BuiltAt={{ .Date }}
+      - -s -w -X github.com/Yakiyo/gon/utils/meta.Version={{ .Version }} -X github.com/Yakiyo/gon/utils/meta.BuiltAt={{ .Date }}
     goos:
       - linux
       - windows
@@ -45,7 +45,7 @@ scoops:
       name: goreleaserbot
       email: bot@goreleaser.com
     commit_msg_template: "Update scoop manifest to {{ .ProjectName }} version {{ .Tag }}"
-    homepage: "https://github.com/Yakiyo/gom"
+    homepage: "https://github.com/Yakiyo/gon"
     license: "MIT"
     description: "{{ .ProjectName }} version {{ .Tag }}"
     repository:
@@ -64,7 +64,7 @@ brews:
       email: bot@goreleaser.com
     commit_msg_template: "Update brew formula to {{ .ProjectName }} version {{ .Tag }}"
     folder: "share/brew"
-    homepage: "https://github.com/Yakiyo/gom"
+    homepage: "https://github.com/Yakiyo/gon"
     license: "MIT"
     repository:
       owner: "Yakiyo"

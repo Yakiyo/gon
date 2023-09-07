@@ -4,11 +4,11 @@ import (
 	"os"
 	"strings"
 
-	"github.com/Yakiyo/gom/utils"
-	"github.com/Yakiyo/gom/utils/config"
-	logger "github.com/Yakiyo/gom/utils/log"
-	"github.com/Yakiyo/gom/utils/meta"
-	"github.com/Yakiyo/gom/utils/where"
+	"github.com/Yakiyo/gon/utils"
+	"github.com/Yakiyo/gon/utils/config"
+	logger "github.com/Yakiyo/gon/utils/log"
+	"github.com/Yakiyo/gon/utils/meta"
+	"github.com/Yakiyo/gon/utils/where"
 	"github.com/charmbracelet/log"
 	cc "github.com/ivanpirog/coloredcobra"
 	"github.com/spf13/cobra"
@@ -18,10 +18,9 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   meta.AppName,
 	Short: "Go Version Manager",
-	Long: `Gom is an easy to use version manager for Go, written in Go, designed with simplicity and speed in mind.
+	Long: `Gon is an easy to use version manager for Go, written in Go, designed with simplicity and speed in mind.
 
-Gom is open-source. For queries, issues or bug reports, visit:
-https://github.com/Yakiyo/gom`,
+For queries, issues or bug reports, visit: https://github.com/Yakiyo/gon`,
 	Version: meta.Version,
 	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
 		viper.SetEnvPrefix("GOM")
@@ -56,6 +55,7 @@ func init() {
 		RootCmd:         rootCmd,
 		Headings:        cc.HiCyan + cc.Bold + cc.Underline,
 		Commands:        cc.HiYellow + cc.Bold,
+		CmdShortDescr:   cc.Bold,
 		Example:         cc.Bold,
 		ExecName:        cc.Bold,
 		Flags:           cc.Bold,
@@ -67,8 +67,8 @@ func init() {
 	// dont mention debug level, usually users dont need, only used on the dev side
 	f.String("log-level", "", "Set log level [info, warn, error, fatal]")
 	f.String("color", "", "Set color output [always, auto, never]")
-	f.String("bin", "", "Set bin directory. Defaults to ~/gom/go")
-	f.String("root-dir", "", "Root directory for gom to use. Defaults to ~/gom")
+	f.String("bin", "", "Set bin directory. Defaults to ~/gon/go")
+	f.String("root-dir", "", "Root directory for gon to use. Defaults to ~/gon")
 	f.String("arch", "", "Override architecture to use")
 }
 

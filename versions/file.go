@@ -5,8 +5,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/Yakiyo/gom/utils"
-	"github.com/Yakiyo/gom/utils/where"
+	"github.com/Yakiyo/gon/utils"
+	"github.com/Yakiyo/gon/utils/where"
 	json "github.com/json-iterator/go"
 	"github.com/samber/lo"
 )

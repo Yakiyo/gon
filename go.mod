@@ -1,4 +1,4 @@
-module github.com/Yakiyo/gom
+module github.com/Yakiyo/gon
 
 go 1.20
 

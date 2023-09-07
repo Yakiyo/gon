@@ -2,7 +2,7 @@ package meta
 
 var (
 	// name of app
-	AppName = "gom"
+	AppName = "gon"
 
 	// app version
 	Version = "dev"

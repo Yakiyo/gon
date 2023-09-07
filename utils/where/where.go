@@ -4,7 +4,7 @@ package where
 import (
 	"path/filepath"
 
-	"github.com/Yakiyo/gom/utils/meta"
+	"github.com/Yakiyo/gon/utils/meta"
 	"github.com/charmbracelet/log"
 	"github.com/spf13/viper"
 
