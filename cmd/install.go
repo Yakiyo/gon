@@ -84,7 +84,7 @@ Otherwise it expects a valid semver compliant string as argument
 		}
 		url := versions.VersionArchiveUrl(version, viper.GetString("arch"))
 
-		file, err := os.Create("/workspace/gom/archive.tar.gz")
+		file, err := os.CreateTemp("", "archive")
 
 		if err != nil {
 			return err
@@ -100,7 +100,7 @@ Otherwise it expects a valid semver compliant string as argument
 			err = archives.Unzip(file, versionDir)
 		} else {
 			log.Info("Extracting tar file")
-			err = archives.Untar(file, versionDir)
+			err = archives.Untar(file.Name(), versionDir)
 		}
 		if err != nil {
 			return fmt.Errorf("Failed to extract files from archive due to error %s", err)
@@ -117,6 +117,9 @@ func downloadToFile(url string, file *os.File) error {
 		return err
 	}
 	if resp.StatusCode != 200 {
+		if resp.StatusCode == 404 {
+			return fmt.Errorf("No archive found at url %v. Please ensure you are using correct architecture and version", url)
+		}
 		return fmt.Errorf("Failed to download archive, received status code %v %v", resp.StatusCode, resp.Status)
 	}
 	defer resp.Body.Close()

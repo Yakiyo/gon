@@ -2,6 +2,7 @@ package archives
 
 import (
 	"archive/tar"
+	"compress/gzip"
 	"fmt"
 	"io"
 	"os"
@@ -12,22 +13,25 @@ import (
 )
 
 // extract files from tar `file` to directory `dest`
-func Untar(file *os.File, dest string) error {
-	// gzr, err := gzip.NewReader(file)
-	// if err != nil {
-	// 	fmt.Println("here")
-	// 	return err
-	// }
-	// defer gzr.Close()
-	tr := tar.NewReader(file)
+func Untar(src, dest string) error {
+	file, err := os.Open(src)
+	if err != nil {
+		return fmt.Errorf("Unable to open tar file %v", err)
+	}
+	gzr, err := gzip.NewReader(file)
+	if err != nil {
+		return fmt.Errorf("gzip reader failure %v", err)
+	}
+	defer gzr.Close()
+	tr := tar.NewReader(gzr)
 	var target string
 	var name string
 	for {
-		fmt.Println("in iter")
 		header, err := tr.Next()
 
 		// no more files
 		if err == io.EOF {
+			log.Debug("EOF")
 			return nil
 		}
 		if err != nil {
