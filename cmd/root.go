@@ -77,7 +77,7 @@ func init() {
 	// dont mention debug level, usually users dont need, only used on the dev side
 	f.String("log-level", "", "Set log level [info, warn, error, fatal]")
 	f.String("color", "", "Set color output [always, auto, never]")
-	f.String("bin", "", "Set bin directory. Defaults to ~/gon/go")
+	f.String("bin", "", "Set bin directory. Defaults to ~/gon/current")
 	f.String("root-dir", "", "Root directory for gon to use. Defaults to ~/gon")
 	f.String("arch", "", "Override architecture to use")
 }

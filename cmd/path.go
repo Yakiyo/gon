@@ -32,9 +32,9 @@ root    - Shows the root directory used by gon`,
 			return fmt.Errorf("Missing required argument. Must be one of %v", strings.Join(validArgs, ", "))
 		}
 		if arg == "bin" {
-			fmt.Println(filepath.Join(where.Bin(), "bin"))
+			fmt.Println(filepath.Join(where.Current(), "bin"))
 		} else if arg == "current" {
-			fmt.Println(where.Bin())
+			fmt.Println(where.Current())
 		} else if arg == "root" {
 			fmt.Println(where.RootDir())
 		}

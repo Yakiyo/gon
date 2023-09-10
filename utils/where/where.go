@@ -29,11 +29,11 @@ func Home() string {
 }
 
 // get the `bin` directory, this is where the current active version is stored
-func Bin() string {
+func Current() string {
 	if conf := viper.GetString("bin"); conf != "" {
 		return conf
 	}
-	return join(root, "go")
+	return join(root, "current")
 }
 
 // get installations directory
