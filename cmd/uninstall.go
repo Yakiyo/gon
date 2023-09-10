@@ -1,6 +1,12 @@
 package cmd
 
 import (
+	"fmt"
+	"os"
+
+	"github.com/Yakiyo/gon/aliases"
+	"github.com/Yakiyo/gon/versions"
+	"github.com/charmbracelet/log"
 	"github.com/spf13/cobra"
 )
 
@@ -17,10 +23,36 @@ to quickly create a Cobra application.`,
 	SilenceUsage:  true,
 	SilenceErrors: true,
 	Args:          cobra.ExactArgs(1),
-	RunE: func(cmd *cobra.Command, args []string) (err error) {
-		_ = args[0]
-
-		return
+	RunE: func(cmd *cobra.Command, args []string) error {
+		version := args[0]
+		version = versions.SafeVStr(version)
+		vdir, exists := versions.VersionDir(version)
+		if !exists {
+			return fmt.Errorf("Version %v is not installed locally", version)
+		}
+		err := os.RemoveAll(vdir)
+		if err != nil {
+			return anyhow("Unable to remove version directory", err)
+		}
+		al, err := aliases.AliasMap()
+		if err != nil {
+			log.Error("Failed to resolve aliases. Skipping alias removals. Please do it manually", "err", err)
+			return nil
+		}
+		val, exists := flipMap(al)[version]
+		// we got no aliases, so return early
+		if !exists {
+			return nil
+		}
+		for _, v := range val {
+			delete(al, v)
+		}
+		err = aliases.SaveAliases(al)
+		if err != nil {
+			return anyhow("Error when saving new alias file", err)
+		}
+		fmt.Printf("Successfully uninstalled version %v\n", version)
+		return nil
 	},
 }
 
