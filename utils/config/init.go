@@ -13,6 +13,5 @@ func init() {
 	v.SetDefault("log_level", "warn")
 	v.SetDefault("color", "auto")
 	v.SetDefault("root_dir", where.RootDir())
-	v.SetDefault("bin", filepath.Join(where.RootDir(), "go"))
 	v.SetDefault("arch", runtime.GOARCH)
 }
