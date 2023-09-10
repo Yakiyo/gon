@@ -52,7 +52,8 @@ Otherwise it expects a valid semver compliant string as argument
 				return fmt.Errorf("Invalid version, %v is not a valid version for Go", version)
 			}
 		} else {
-			version, err := versions.FromGoMod()
+			var err error
+			version, err = versions.FromGoMod()
 			if err != nil {
 				return err
 			}
