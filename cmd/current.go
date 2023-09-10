@@ -2,9 +2,11 @@ package cmd
 
 import (
 	"fmt"
-	"os/exec"
-	"strings"
+	"os"
+	"path/filepath"
 
+	"github.com/Yakiyo/gon/utils"
+	"github.com/Yakiyo/gon/utils/where"
 	"github.com/spf13/cobra"
 )
 
@@ -34,22 +36,13 @@ func init() {
 }
 
 func getCurrent() (string, error) {
-	_, err := exec.LookPath("go")
-	if err != nil {
+	cur := where.Current()
+	if !utils.PathExists(cur) {
 		return "", nil
 	}
-	out, err := exec.Command("go", "version").Output()
+	link, err := os.Readlink(cur)
 	if err != nil {
-		return "", anyhow("Unable to run Go from command line", err)
+		return "", anyhow("Error when reading link", err)
 	}
-	// usually output of `go version` is as follows
-	// "go version go{{version}} {{platform}}/{{architecture}}"
-	// so it's a 4 word string, so we slice and dice em to get the version
-	output := strings.Split(string(out), " ")
-	if len(output) < 4 {
-		// unexpected output format, so just return it
-		return strings.Join(output, " "), nil
-	}
-	version := strings.TrimPrefix(output[2], "go")
-	return version, nil
+	return filepath.Base(link), nil
 }
