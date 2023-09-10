@@ -1,7 +1,6 @@
 package config
 
 import (
-	"path/filepath"
 	"runtime"
 
 	"github.com/Yakiyo/gon/utils/where"
