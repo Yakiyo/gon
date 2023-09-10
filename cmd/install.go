@@ -52,24 +52,9 @@ Otherwise it expects a valid semver compliant string as argument
 				return fmt.Errorf("Invalid version, %v is not a valid version for Go", version)
 			}
 		} else {
-			if !utils.PathExists("./go.mod") {
-				return fmt.Errorf("No version provided and current directory does not contain a go.mod file. Provide a version explicitly.")
-			}
-			b, err := os.ReadFile("./go.mod")
+			version, err := versions.FromGoMod()
 			if err != nil {
-				return fmt.Errorf("Unable to read local go.mod file, received error %s", err)
-			}
-			str := string(b)
-			// find line that contains `go {{ version }}`
-			vline, ok := lo.Find[string](strings.Split(str, "\n"), func(item string) bool {
-				return strings.HasPrefix(item, "go")
-			})
-			if !ok {
-				return fmt.Errorf("Invalid go.mod file, file does not specify go version")
-			}
-			version = versions.SafeVStr(strings.TrimSpace(strings.ReplaceAll(vline, "go", "")))
-			if version == "" {
-				return fmt.Errorf("Could not parse version from go.mod file. Line contains %s", vline)
+				return err
 			}
 			log.Info("Resolving version from go.mod", "version", version)
 		}
