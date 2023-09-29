@@ -1,0 +1,29 @@
+{
+    "version": "1.0.0",
+    "architecture": {
+        "32bit": {
+            "url": "https://github.com/Yakiyo/gon/releases/download/v1.0.0/gon_Windows_i386.zip",
+            "bin": [
+                "gon.exe"
+            ],
+            "hash": "bf74af07875e3b066238e230ded13baa999871d56841da877034c4e9a2933552"
+        },
+        "64bit": {
+            "url": "https://github.com/Yakiyo/gon/releases/download/v1.0.0/gon_Windows_x86_64.zip",
+            "bin": [
+                "gon.exe"
+            ],
+            "hash": "5d638edffa62ed4ddf87dc288b4c7bcff5bb22e151e8513dd30e0923bdd796ce"
+        },
+        "arm64": {
+            "url": "https://github.com/Yakiyo/gon/releases/download/v1.0.0/gon_Windows_arm64.zip",
+            "bin": [
+                "gon.exe"
+            ],
+            "hash": "7068984af45bf93044e553256fc51842c4656006e5fe2a1637027dd411f5fd83"
+        }
+    },
+    "homepage": "https://github.com/Yakiyo/gon",
+    "license": "MIT",
+    "description": "gon version v1.0.0"
+}
